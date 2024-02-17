@@ -1,0 +1,97 @@
+
+  .heading  {
+    align-items: center;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #6a0dad;
+  }
+  
+  form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    color: #000000;
+    margin-top: 10px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"],
+  button[type="reset"],
+  button[type="submit"]{
+    background-color: #6a0dad;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]:hover{
+    background-color: #a472c5;
+  }
+  
+  button[type="reset"] {
+    background-color: #e0e0e0;
+    color: black;
+  }
+  
+  button[type="reset"]:hover {
+    background-color: rgb(103, 74, 103);
+    color: #ffffff;
+
+  }
+  
+    
+.checkbox-label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 15px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.input-div {
+    padding: 10px;
+}
+
+.snackbar {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgb(97, 162, 97);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    padding: 20px;
+  }
