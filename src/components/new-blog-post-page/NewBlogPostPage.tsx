@@ -3,6 +3,7 @@ import { BlogPost, BlogTags } from '../../types';
 import './NewBlogPostPage.css';
 import client from '../../services/apolloClient';
 import { CREATE_BLOG_MUTATION } from '../../graphql/create-blogs.gql';
+import { validateBlogPost } from '../../utils/validateInput';
 interface NewBlogPostPageProps {
   onClose: () => void;
 }
@@ -20,11 +21,10 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   };
 
   const [blogPost, setBlogPost] = useState<Partial<BlogPost>>(initialBlogPostState);
-  const [selectedTags, setSelectedTags] = useState<BlogTags[]>([]);
   const [useContentAsExcerpt, setUseContentAsExcerpt] = useState(false);
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
-
+  const [selectedTag, setSelectedTag] = useState<BlogTags | null>(null); // State variable to hold the selected tag
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -34,11 +34,8 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const tag = value as BlogTags;
-    setSelectedTags((prevTags) =>
-      prevTags.includes(tag)
-        ? prevTags.filter((prevTag) => prevTag !== tag)
-        : [...prevTags, tag]
-    );
+    setSelectedTag(e.target.value as BlogTags);
+    setBlogPost({...blogPost, tags: tag});
   };
 
   const handleCheckboxChange = () => {
@@ -53,36 +50,44 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    client.mutate({
-    mutation: CREATE_BLOG_MUTATION,
-    variables: {
-      ...blogPost
+    if(validateBlogPost(blogPost)) {
+      client.mutate({
+        mutation: CREATE_BLOG_MUTATION,
+        variables: {
+          ...blogPost
+        }
+        })
+        .then(result => {
+          console.log('Blog created successfully:', result.data.createBlog);
+          setShowSuccessSnackbar(true);
+        })
+        .catch(error => {
+          console.error('Error creating blog:', error);
+          setShowErrorSnackbar(true);
+        });
+        setTimeout(() => {
+          setShowSuccessSnackbar(false);
+          setShowErrorSnackbar(false);
+          window.location.href = '/';
+        }, 2000);
     }
-    })
-    .then(result => {
-      console.log('Blog created successfully:', result.data.createBlog);
-      setShowSuccessSnackbar(true);
-    })
-    .catch(error => {
-      console.error('Error creating blog:', error);
+    else {
       setShowErrorSnackbar(true);
-    });
+      setTimeout(() => {
+        setShowErrorSnackbar(false);
+      }, 2000);
+    }
 
-    setTimeout(() => {
-      setShowSuccessSnackbar(false);
-      setShowErrorSnackbar(false);
-      handleCancel();
-    }, 2000);
 
     // Reset form after submission
     setBlogPost(initialBlogPostState);
-    setSelectedTags([]);
+    setSelectedTag(null);
   };
 
   const handleReset = () => {
     // Reset form without submitting
     setBlogPost(initialBlogPostState);
-    setSelectedTags([]);
+    setSelectedTag(null);
     setUseContentAsExcerpt(false);
   };
 
@@ -131,7 +136,7 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
                   type="radio"
                   name="tags"
                   value={tag}
-                  checked={blogPost.tags === tag}
+                  checked={selectedTag === tag}
                   onChange={handleTagChange}
                 />
                 {tag}
@@ -149,7 +154,7 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
         </div>
       </form>
       {showSuccessSnackbar && <div className="snackbar">Your blog has been submitted.</div>}
-      {showErrorSnackbar && <div className="snackbar">There was an error while submitting your blog.</div>}
+      {showErrorSnackbar && <div className="redsnackbar">There was an error. Check if you added valid values.</div>}
     </div>
   );
 };
