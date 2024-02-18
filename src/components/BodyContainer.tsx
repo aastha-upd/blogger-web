@@ -14,13 +14,18 @@ const BodyContainer: React.FC = () => {
     const [addNew, setAddNew] = useState<Boolean>(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalPages = 5;
-    const itemsPerPage = 2;
+    //would have been nice to know before hand 
+    //but that will need another gql call to get the count
+    //so maybe some other day
+    //const totalPages = 5;
+
+    //better to have this as a deployment config instead
+    //but for now im keeping it here to be accessible 
+    //outside code
+    const itemsPerPage = process.env.REACT_APP_PAGE_SIZE || 4;
 
     const nextPage = () => {
-        if (currentPage < totalPages) {
         setCurrentPage(currentPage + 1);
-        }
     };
 
     const prevPage = () => {
@@ -29,14 +34,7 @@ const BodyContainer: React.FC = () => {
         }
     };
 
-    const goToPage = (pageNumber: number) => {
-        if (pageNumber >= 1 && pageNumber <= totalPages) {
-        setCurrentPage(pageNumber);
-        }
-    };
-
     useEffect (() => {
-        console.log("page: ", currentPage);
         const data = client
         .query({
           query: GET_BLOGS,
@@ -46,7 +44,6 @@ const BodyContainer: React.FC = () => {
           },
         })
         .then((result: any) => {
-          console.log("yohoooo: ", result.data.blogs); // Handle the fetched blogs data here
           setBlogPosts(result.data.blogs);
         })
         .catch((error: any) => {
