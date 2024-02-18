@@ -17,7 +17,7 @@ const BlogPostPage: React.FC<{post : BlogPost}> = (post) => {
       <div className="meta-info">
         <span>By {blogPost.author}</span>
         <span>{blogPost.minRead} min read</span>
-        <span>{new Date(blogPost.date).toString()}</span>
+        <span>{blogPost.date}</span>
       </div>
       <img className="img" src={blogPost.image} alt={blogPost.title} />
       <p>{blogPost.content}</p>
