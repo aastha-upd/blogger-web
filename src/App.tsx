@@ -5,9 +5,11 @@ import  { BlogPostPage } from './components/blogger-container/blog-post';
 import { BloggerHeader, BloggerFooter } from './components/header-footer';
 import { BlogPostList } from './components/blogger-container';
 import { NewBlogPostPage } from './components/new-blog-post-page';
+import { IdProvider } from './hooks/id-provider';
+import BodyContainer from './components/BodyContainer';
 const mockblogPosts: BlogPost[] = [
   {
-    id: 1,
+    id: "1",
     title: "Blog Post 1",
     image: "https://via.placeholder.com/400x200?text=Image+1",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -19,7 +21,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.TECH, BlogTags.TRAVEL],
   },
   {
-    id: 2,
+    id: "2",
     title: "Blog Post 2",
     image: "https://via.placeholder.com/400x200?text=Image+2",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -31,7 +33,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.FOOD, BlogTags.LIFE],
   },
   {
-    id: 3,
+    id: "3",
     title: "Blog Post 3",
     image: "https://via.placeholder.com/400x200?text=Image+3",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -43,7 +45,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.BUSINESS, BlogTags.TECH],
   },
   {
-    id: 4,
+    id: "4",
     title: "Blog Post 4",
     image: "https://via.placeholder.com/400x200?text=Image+4",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -55,7 +57,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.LIFE, BlogTags.TRAVEL],
   },
   {
-    id: 5,
+    id: "5",
     title: "Blog Post 5",
     image: "https://via.placeholder.com/400x200?text=Image+5",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -67,7 +69,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.FOOD],
   },
   {
-    id: 6,
+    id: "6",
     title: "Blog Post 6",
     image: "https://via.placeholder.com/400x200?text=Image+6",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -79,7 +81,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.EDU, BlogTags.TECH],
   },
   {
-    id: 7,
+    id: "7",
     title: "Blog Post 7",
     image: "https://via.placeholder.com/400x200?text=Image+7",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -91,7 +93,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.POLITICS, BlogTags.ENVIRONMENT],
   },
   {
-    id: 8,
+    id: "8",
     title: "Blog Post 8",
     image: "https://via.placeholder.com/400x200?text=Image+8",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -103,7 +105,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [],
   },
   {
-    id: 9,
+    id: "9",
     title: "Blog Post 9",
     image: "https://via.placeholder.com/400x200?text=Image+9",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -115,7 +117,7 @@ const mockblogPosts: BlogPost[] = [
     tags: [BlogTags.SPORTS],
   },
   {
-    id: 10,
+    id: "10",
     title: "Blog Post 10",
     image: "https://via.placeholder.com/400x200?text=Image+10",
     excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -134,45 +136,15 @@ const mockblogPosts: BlogPost[] = [
 const App: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState(mockblogPosts);
 
-    const handlOnType = (type: string) => {
-      if(type === "untagged") {
-        setBlogPosts(mockblogPosts.filter((blog)=> {
-          console.log(blog.tags.length);
-          if(blog.tags.length === 0) return blog;
-        }));
-      }
-      else if(type === "tagged") {
-        setBlogPosts(mockblogPosts.filter((blog)=> {
-          if(blog.tags.length > 0) return blog;
-        }));
-      }
-      else {setBlogPosts(mockblogPosts);}
-    }
 
-    const BlogPostRoute = () => {
-      const { slug } = useParams<{ slug: string }>();
-      const post = blogPosts.find(post => post.slug === slug);
-      if (!post) {
-          return <div>Post not found</div>;
-      }
-      return <BlogPostPage post={post}/>;
-    }
 
     console.log(blogPosts);
 
     return (
-      <Router basename="/blogger-web">
-        <div>
-          <BloggerHeader onType={handlOnType}/>
-          
-          <Routes>
-            <Route path="/" element={<BlogPostList posts={blogPosts}/>} />
-            <Route path="/blog/:slug" element={<BlogPostRoute />} />
-            <Route path="/write-new-blog" element={<NewBlogPostPage />} />
-          </Routes>
-          <BloggerFooter />
-        </div>
-      </Router>
+      <IdProvider>
+        <BodyContainer blogPosts={blogPosts}/>
+        <BloggerFooter />
+      </IdProvider>
     );
 }
 

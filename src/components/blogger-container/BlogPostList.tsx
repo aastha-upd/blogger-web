@@ -6,9 +6,10 @@ import "./BlogPostList.css";
 
 interface BlogPostListProps {
   posts: BlogPost[];
+  onCardClick: (id: string) => void;
 }
 
-const BlogPostList: FC<BlogPostListProps> = ({ posts }) => {
+const BlogPostList: FC<BlogPostListProps> = ({ posts, onCardClick }) => {
   const [selectedBlogId, setSelectedBlogId] = useState();
 
   return (
@@ -21,7 +22,7 @@ const BlogPostList: FC<BlogPostListProps> = ({ posts }) => {
       
       {posts.map((post, index) => (
         <div className="blog-cards">
-          <BlogCard post={post}/>
+          <BlogCard post={post} onCardClick={onCardClick}/>
         </div>
       ))}
       {

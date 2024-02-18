@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { BlogPost, BlogTags } from '../../types';
 import './NewBlogPostPage.css';
-
-const NewBlogPostPage: React.FC = () => {
+interface NewBlogPostPageProps {
+  onClose: () => void;
+}
+const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   const initialBlogPostState: Partial<BlogPost> = {
-    id: 0,
+    id: "0",
     title: '',
     image: '',
     excerpt: '',
@@ -68,7 +70,7 @@ const NewBlogPostPage: React.FC = () => {
 
   const handleCancel = () => {
     // Navigate to the homepage
-    window.location.href = '/';
+    onClose();
   };
 
   return (

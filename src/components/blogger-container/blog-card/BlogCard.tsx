@@ -4,13 +4,14 @@ import "./BlogCard.css";
 
 interface BlogCardProps {
   post: BlogPost;
+  onCardClick: (id: string) => void;
 }
 
-const BlogCard: FC<BlogCardProps> = ({ post }) => {
+const BlogCard: FC<BlogCardProps> = ({ post, onCardClick }) => {
 
   const handleCardClick = () => {
     // Navigate to the specified href when card is clicked
-    window.location.href = `/blog/${post.slug}`;
+    onCardClick(post.id);
   };
 
   return (
