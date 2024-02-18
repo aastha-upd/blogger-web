@@ -47,3 +47,10 @@
   
   /* Styles for the BlogCard component can be included here */
   
+  .no-more {
+    font-size: 24px;
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+    padding: 150px;
+  }

@@ -7,6 +7,7 @@ import { BlogPostPage } from './blogger-container/blog-post';
 import { BloggerHeader } from './header-footer';
 import { GET_BLOGS } from '../graphql/get-blogs.gql';
 import client from '../services/apolloClient';
+import "./blogger-container/BlogPostList.css";
 
 const BodyContainer: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -61,12 +62,18 @@ const BodyContainer: React.FC = () => {
   return (<>
       {<BloggerHeader onNew={() => setAddNew(true)} onBlogs={handleAllBlogs}/>}
       {!id && !addNew &&
+      <>
+      <div className="heading">
+        <span className="blog-heading"> Blogs </span>
+        <span className="tag-line"> Tech. Food. Travel. Education. Lifestyle. Sports.</span>
+      </div>
       <BlogPostList 
         posts={blogPosts}
         onCardClick={(id: string) => setId(id)}
         pageNumber={currentPage}
         onNext={nextPage}
-        onPrev={prevPage}/>}
+        onPrev={prevPage}/>
+      </>}
       {id && !addNew && post && <BlogPostPage post={post} />}
       {addNew && <NewBlogPostPage onClose={() => setAddNew(false)}/>}
       </>

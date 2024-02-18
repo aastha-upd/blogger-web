@@ -15,10 +15,10 @@ const BlogPostList: React.FC<BlogPostListProps> = ({ posts, onCardClick, pageNum
 
   return (
     <div>
-      <div className="heading">
-        <span className="blog-heading"> Blogs </span>
-        <span className="tag-line"> Tech. Food. Travel. Education. Lifestyle. Sports.</span>
-      </div>
+      {pageNumber !== 1 && posts.length == 0 && 
+      <div className="no-more">
+        No more blogs to show. Please go to previous page.
+      </div>}
       <div className="blog-post-list">
         {posts.map((post) => (
           <div className="blog-cards" key={post.id}>
