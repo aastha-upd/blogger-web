@@ -19,7 +19,7 @@ const BlogPostList: React.FC<BlogPostListProps> = ({ posts, onCardClick }) => {
     <div className="blog-post-list">
       
       {posts.map((post) => (
-        <div className="blog-cards">
+        <div className="blog-cards" key={post.id}>
           <BlogCard post={post} onCardClick={onCardClick}/>
         </div>
       ))}

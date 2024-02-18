@@ -12,7 +12,7 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   const initialBlogPostState: Partial<BlogPost> = {
     id: "0",
     title: '',
-    image: '',
+    image: 'https://via.placeholder.com/400x200?text=default',
     excerpt: '',
     author: '',
     slug: '',
