@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BlogPost } from '../../../types';
 import "./BlogPost.css";
 
-
 const BlogPostPage: React.FC<{post : BlogPost}> = (post) => {
-
-
   const blogPost = post.post;
   if (!blogPost) {
     return <div>Loading...</div>; // Placeholder for loading state

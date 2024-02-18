@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { BlogPost, BlogTags } from './types';
+import React from 'react';
 import { BloggerFooter } from './components/header-footer';
 import { IdProvider } from './hooks/id-provider';
 import BodyContainer from './components/BodyContainer';

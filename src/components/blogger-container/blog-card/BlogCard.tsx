@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { BlogPost, BlogTags } from '../../../types';
+import { FC } from 'react';
+import { BlogPost } from '../../../types';
 import "./BlogCard.css";
 
 interface BlogCardProps {
@@ -8,7 +8,6 @@ interface BlogCardProps {
 }
 
 const BlogCard: FC<BlogCardProps> = ({ post, onCardClick }) => {
-
   const handleCardClick = () => {
     onCardClick(post.id);
   };
