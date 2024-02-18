@@ -166,7 +166,7 @@ const App: React.FC = () => {
           <BloggerHeader onType={handlOnType}/>
           
           <Routes>
-            <Route path="/" element={<BlogPostList posts={blogPosts}/>} />
+            <Route path="/blogger-web" element={<BlogPostList posts={blogPosts}/>} />
             <Route path="/blog/:slug" element={<BlogPostRoute />} />
             <Route path="/write-new-blog" element={<NewBlogPostPage />} />
           </Routes>
