@@ -5,6 +5,7 @@
     align-self: center;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
   }
   
   .blog-post-page h1 {
@@ -31,6 +32,7 @@
   
   .blog-post-page p {
     line-height: 1.6;
+    height: auto;
   }
 
   

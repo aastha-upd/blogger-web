@@ -10,6 +10,6 @@ export interface BlogPost {
     slug?: string;
     content: string;
     minRead: number;
-    tags: BlogTags[];
+    tags: string;
   };
   

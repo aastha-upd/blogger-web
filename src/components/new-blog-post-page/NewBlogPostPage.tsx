@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { BlogPost, BlogTags } from '../../types';
 import './NewBlogPostPage.css';
+import client from '../../services/apolloClient';
+import { CREATE_BLOG_MUTATION } from '../../graphql/create-blogs.gql';
 interface NewBlogPostPageProps {
   onClose: () => void;
 }
+
 const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   const initialBlogPostState: Partial<BlogPost> = {
     id: "0",
@@ -13,13 +16,14 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
     author: '',
     slug: '',
     content: '',
-    tags: [],
+    tags: '',
   };
 
   const [blogPost, setBlogPost] = useState<Partial<BlogPost>>(initialBlogPostState);
   const [selectedTags, setSelectedTags] = useState<BlogTags[]>([]);
   const [useContentAsExcerpt, setUseContentAsExcerpt] = useState(false);
-  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
+  const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,11 +52,25 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Perform submission logic here, e.g., send data to backend
-    console.log('Submitted:', blogPost);
-    setShowSnackbar(true);
+    
+    client.mutate({
+    mutation: CREATE_BLOG_MUTATION,
+    variables: {
+      ...blogPost
+    }
+    })
+    .then(result => {
+      console.log('Blog created successfully:', result.data.createBlog);
+      setShowSuccessSnackbar(true);
+    })
+    .catch(error => {
+      console.error('Error creating blog:', error);
+      setShowErrorSnackbar(true);
+    });
+
     setTimeout(() => {
-      setShowSnackbar(false);
+      setShowSuccessSnackbar(false);
+      setShowErrorSnackbar(false);
       handleCancel();
     }, 2000);
 
@@ -108,17 +126,17 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
         <div className="input-div">
           <label>Tags:</label>
           {Object.values(BlogTags).map((tag: BlogTags) => (
-            <label className="checkbox-label" key={tag}>
-              <input
-                type="checkbox"
-                name="tags"
-                value={tag}
-                checked={selectedTags.includes(tag)}
-                onChange={handleTagChange}
-              />{' '}
-              {tag}
-            </label>
-          ))}
+              <label key={tag}>
+                <input
+                  type="radio"
+                  name="tags"
+                  value={tag}
+                  checked={blogPost.tags === tag}
+                  onChange={handleTagChange}
+                />
+                {tag}
+              </label>
+            ))}
         </div>
         <div className="actions">
           <button type="submit">Submit</button>
@@ -130,7 +148,8 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
           </button>
         </div>
       </form>
-      {showSnackbar && <div className="snackbar">Your blog has been submitted.</div>}
+      {showSuccessSnackbar && <div className="snackbar">Your blog has been submitted.</div>}
+      {showErrorSnackbar && <div className="snackbar">There was an error while submitting your blog.</div>}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
-import { FaSkyatlas, FaPenSquare, FaPen } from "react-icons/fa";
+import { FaSkyatlas, FaPenSquare } from "react-icons/fa";
 import './BloggerHeader.css'
-import { useParams } from "react-router-dom";
 
 interface HeaderProps {
   onNew: () => void;
@@ -9,8 +8,6 @@ interface HeaderProps {
 }
 
 const BloggerHeader: React.FC<HeaderProps> = ({onNew, onBlogs}) => {
-  const { slug } = useParams<{ slug: string }>();
-
   const onAddNewBlog = () => {
     onNew();
   }
