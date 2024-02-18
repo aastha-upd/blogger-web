@@ -1,7 +1,7 @@
 import { BlogTags } from "./BlogTag";
 
 export interface BlogPost {
-    id: number;
+    id: string;
     title: string;
     image: string;
     excerpt: string;
@@ -10,6 +10,6 @@ export interface BlogPost {
     slug?: string;
     content: string;
     minRead: number;
-    tags: BlogTags[];
+    tags: string;
   };
   

@@ -1,15 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { BlogPost } from '../../types';
-import BlogPostPage from './blog-post/BlogPost';
 import BlogCard from './blog-card/BlogCard';
 import "./BlogPostList.css";
 
 interface BlogPostListProps {
   posts: BlogPost[];
+  onCardClick: (id: string) => void;
 }
 
-const BlogPostList: FC<BlogPostListProps> = ({ posts }) => {
-  const [selectedBlogId, setSelectedBlogId] = useState();
+const BlogPostList: React.FC<BlogPostListProps> = ({ posts, onCardClick }) => {
 
   return (
     <div>
@@ -19,9 +18,9 @@ const BlogPostList: FC<BlogPostListProps> = ({ posts }) => {
     </div>
     <div className="blog-post-list">
       
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <div className="blog-cards">
-          <BlogCard post={post}/>
+          <BlogCard post={post} onCardClick={onCardClick}/>
         </div>
       ))}
       {

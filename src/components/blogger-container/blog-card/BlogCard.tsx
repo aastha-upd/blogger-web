@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
-import { BlogPost, BlogTags } from '../../../types'; // Assuming you have defined a BlogPost type and BlogTags enum
+import { BlogPost, BlogTags } from '../../../types';
 import "./BlogCard.css";
 
 interface BlogCardProps {
   post: BlogPost;
+  onCardClick: (id: string) => void;
 }
 
-const BlogCard: FC<BlogCardProps> = ({ post }) => {
+const BlogCard: FC<BlogCardProps> = ({ post, onCardClick }) => {
 
   const handleCardClick = () => {
-    // Navigate to the specified href when card is clicked
-    window.location.href = `/blog/${post.slug}`;
+    onCardClick(post.id);
   };
 
   return (
@@ -28,11 +28,7 @@ const BlogCard: FC<BlogCardProps> = ({ post }) => {
         <p className="excerpt">{post.excerpt}</p>
         <div className="meta-info">
           <span>{post.author} on {post.date}  </span>
-          <div className="tags">
-          {post.tags?.map(tag => (
-            <span key={tag} className="tag">#{tag.toLocaleLowerCase()}</span>
-          ))}
-        </div>
+          <span>#{post.tags.toLocaleLowerCase()}</span>
         </div>
 
       </div>

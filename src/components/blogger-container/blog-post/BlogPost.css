@@ -1,7 +1,11 @@
 .blog-post-page {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 90vw;
+    height: 70vh;
     padding: 20px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
   }
   
   .blog-post-page h1 {
@@ -20,13 +24,15 @@
   }
   
   .blog-post-page img {
-    width: 100%;
+    width: 80%;
     height: auto;
     margin-bottom: 20px;
+    align-self: center;
   }
   
   .blog-post-page p {
     line-height: 1.6;
+    height: auto;
   }
 
   
