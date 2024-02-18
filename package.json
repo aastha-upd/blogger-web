@@ -1,7 +1,7 @@
 {
   "name": "blogger-web",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@testing-library/jest-dom": "^5.17.0",
