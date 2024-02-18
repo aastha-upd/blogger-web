@@ -161,7 +161,7 @@ const App: React.FC = () => {
     console.log(blogPosts);
 
     return (
-      <Router>
+      <Router basename="/blogger-web">
         <div>
           <BloggerHeader onType={handlOnType}/>
           
