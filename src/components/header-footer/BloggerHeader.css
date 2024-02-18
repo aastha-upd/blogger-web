@@ -20,11 +20,12 @@
     border-color: #ffffff;
     border-style: none;
     cursor: pointer;
+    padding: 10px;
+    border-radius: 7px;
   }
 
   .mid:hover{
-    border: 13px;
-    border-color: purple;
+    background: linear-gradient(to top, white 20%, rgb(137, 55, 137) 80%);
   }
   
   .right-header{

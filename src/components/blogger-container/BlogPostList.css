@@ -23,8 +23,26 @@
     padding: 0 100px;
     padding-bottom: 40px;
   }
-  
-  .blog-cards {
+
+  .pagination {
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+    padding: 20px 100px;
+
+
+    .page {
+      background-color: transparent;
+      color: purple;
+      border: none;
+      padding: 8px;
+      border-radius: 7px;
+
+      &:hover{
+        background-color: purple;
+        color: white;
+      }
+    }
   }
   
   /* Styles for the BlogCard component can be included here */

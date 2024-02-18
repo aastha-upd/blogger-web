@@ -11,21 +11,38 @@ import client from '../services/apolloClient';
 const BodyContainer: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
     const { id, setId } = useId();
-    const post = id && blogPosts.find(post => post?.id === id);
     const [addNew, setAddNew] = useState<Boolean>(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const totalPages = 5;
+    const itemsPerPage = 2;
 
-      
-      // Make the GraphQL query
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+        }
+    };
 
+    const prevPage = () => {
+        if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const goToPage = (pageNumber: number) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+        setCurrentPage(pageNumber);
+        }
+    };
 
     useEffect (() => {
+        console.log("page: ", currentPage);
         const data = client
         .query({
           query: GET_BLOGS,
           variables: {
-            pageSize: 13,
-            pageNumber: 1,
+            pageSize: itemsPerPage,
+            pageNumber: currentPage,
           },
         })
         .then((result: any) => {
@@ -35,16 +52,25 @@ const BodyContainer: React.FC = () => {
         .catch((error: any) => {
           console.error('Error fetching blogs:', error);
         });
-    }, []);
+    }, [currentPage, itemsPerPage]);
+
+    const post = id && blogPosts.find(post => post?.id === id);
 
     const handleAllBlogs = () => {
         setAddNew(false);
         setId("");
+        setCurrentPage(1);
     }
 
   return (<>
       {<BloggerHeader onNew={() => setAddNew(true)} onBlogs={handleAllBlogs}/>}
-      {!id && !addNew && <BlogPostList posts={blogPosts} onCardClick={(id: string) => setId(id)}/>}
+      {!id && !addNew &&
+      <BlogPostList 
+        posts={blogPosts}
+        onCardClick={(id: string) => setId(id)}
+        pageNumber={currentPage}
+        onNext={nextPage}
+        onPrev={prevPage}/>}
       {id && !addNew && post && <BlogPostPage post={post} />}
       {addNew && <NewBlogPostPage onClose={() => setAddNew(false)}/>}
       </>

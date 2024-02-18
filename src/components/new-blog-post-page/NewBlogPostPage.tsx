@@ -70,6 +70,9 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
           setShowErrorSnackbar(false);
           window.location.href = '/';
         }, 2000);
+        // Reset form after submission
+        setBlogPost(initialBlogPostState);
+        setSelectedTag(null);
     }
     else {
       setShowErrorSnackbar(true);
@@ -77,11 +80,6 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
         setShowErrorSnackbar(false);
       }, 2000);
     }
-
-
-    // Reset form after submission
-    setBlogPost(initialBlogPostState);
-    setSelectedTag(null);
   };
 
   const handleReset = () => {
