@@ -8,11 +8,6 @@ const client = new ApolloClient({
         uri: GRAPHQL_URI,
     }),
     cache: new InMemoryCache(),
-    defaultOptions: {
-        query: {
-            fetchPolicy: 'network-only',
-        },
-    },
 });
 
 export default client;
