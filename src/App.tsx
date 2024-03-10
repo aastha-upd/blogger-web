@@ -1,15 +1,16 @@
 import React from 'react';
-import { BloggerFooter } from './components/header-footer';
-import { IdProvider } from './hooks/id-provider';
 import BodyContainer from './components/BodyContainer';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 const App: React.FC = () => {
 
     return (
-      <IdProvider>
-        <BodyContainer />
-        <BloggerFooter />
-      </IdProvider>
+        <Router>
+        <Routes>
+          <Route path="/" Component={BodyContainer}/>
+          <Route path="/:id" Component={BodyContainer}/>
+        </Routes>
+        </Router>
     );
 }
 

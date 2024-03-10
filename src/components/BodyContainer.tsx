@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import BlogPostList from './blogger-container/BlogPostList';
 import { NewBlogPostPage } from './new-blog-post-page';
 import { useId } from '../hooks/id-provider';
 import { BlogPost } from '../types';
 import { BlogPostPage } from './blogger-container/blog-post';
-import { BloggerHeader } from './header-footer';
+import { BloggerFooter, BloggerHeader } from './header-footer';
 import { GET_BLOGS } from '../graphql/get-blogs.gql';
 import client from '../services/apolloClient';
 import "./blogger-container/BlogPostList.css";
 
+
 const BodyContainer: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-    const { id, setId } = useId();
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const [addNew, setAddNew] = useState<Boolean>(false);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,6 +39,7 @@ const BodyContainer: React.FC = () => {
     };
 
     useEffect (() => {
+      console.log("cache: ", client.extract());
         const data = client
         .query({
           query: GET_BLOGS,
@@ -55,8 +60,8 @@ const BodyContainer: React.FC = () => {
 
     const handleAllBlogs = () => {
         setAddNew(false);
-        setId("");
         setCurrentPage(1);
+        navigate("/");
     }
 
   return (<>
@@ -69,13 +74,14 @@ const BodyContainer: React.FC = () => {
       </div>
       <BlogPostList 
         posts={blogPosts}
-        onCardClick={(id: string) => setId(id)}
+        onCardClick={(id: string) => navigate(`/${id}`)}
         pageNumber={currentPage}
         onNext={nextPage}
         onPrev={prevPage}/>
       </>}
       {id && !addNew && post && <BlogPostPage post={post} />}
       {addNew && <NewBlogPostPage onClose={() => setAddNew(false)}/>}
+      <BloggerFooter />
       </>
   );
 };
