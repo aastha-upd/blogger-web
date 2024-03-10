@@ -39,12 +39,9 @@ const NewBlogPostPage: React.FC<NewBlogPostPageProps> = ({onClose}) => {
   };
 
   const handleCheckboxChange = () => {
+    const exp = !useContentAsExcerpt ? blogPost.content?.substring(0, 100) : '';
+    setBlogPost({ ...blogPost, excerpt: exp });
     setUseContentAsExcerpt(!useContentAsExcerpt);
-    if (!useContentAsExcerpt) {
-      setBlogPost({ ...blogPost, excerpt: blogPost.content?.substring(0, 100) });
-    } else {
-      setBlogPost({ ...blogPost, excerpt: '' });
-    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
