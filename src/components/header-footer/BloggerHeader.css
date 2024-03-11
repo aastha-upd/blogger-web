@@ -1,14 +1,26 @@
-.header {
+  
+  .dark {
+    background-color: darkslategrey;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
     padding: 10px 20px;
     position: sticky;
     top: 0;
     z-index: 1000;
   }
-  
+
+  .light {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
   .left-header {
     display: flex;
     align-items: center;
@@ -64,4 +76,9 @@
   .sky {
     color: purple;
     cursor: pointer;
+  }
+
+  .theme-btns {
+    padding: 20px;
+    color: purple;
   }
