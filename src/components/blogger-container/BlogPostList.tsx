@@ -9,8 +9,8 @@ interface BlogPostListProps {
   isLoading: boolean;
 }
 
-const BlogPostList: React.FC<BlogPostListProps> = ({ posts, onCardClick, isLoading }) => {
-
+const BlogPostList: React.FC<BlogPostListProps> = ({ posts, onCardClick, isLoading }) => { 
+  
   return (
     <div>
       {/* {pageNumber !== 1 && posts.length == 0 && 

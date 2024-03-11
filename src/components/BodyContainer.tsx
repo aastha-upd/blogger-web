@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import BlogPostList from './blogger-container/BlogPostList';
 import { NewBlogPostPage } from './new-blog-post-page';
@@ -8,6 +8,7 @@ import { BloggerFooter, BloggerHeader } from './header-footer';
 import { GET_BLOGS } from '../graphql/get-blogs.gql';
 import client from '../services/apolloClient';
 import "./blogger-container/BlogPostList.css";
+import { useSelector } from 'react-redux';
 
 
 const BodyContainer: React.FC = () => {
@@ -15,6 +16,8 @@ const BodyContainer: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const ref = useRef(0);
+    const selectedTheme = useSelector((state : any) => state.theme);
 
     const [addNew, setAddNew] = useState<Boolean>(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,15 +31,6 @@ const BodyContainer: React.FC = () => {
     //but for now im keeping it here to be accessible 
     //outside code
     const itemsPerPage = process.env.REACT_APP_PAGE_SIZE || 4;
-
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage - 1);
-    };
 
     useEffect (() => {
       console.log("cache: ", client.extract());
@@ -69,6 +63,7 @@ const BodyContainer: React.FC = () => {
           },
         })
         .then((result: any) => {
+          if (result.data.blogs && result.data.blogs.length === 0) ref.current = 1;
           setBlogPosts((blogPosts) => [...blogPosts, ...result.data.blogs]);
         })
         .catch((error: any) => {
@@ -87,7 +82,7 @@ const BodyContainer: React.FC = () => {
         const { scrollTop, clientHeight, scrollHeight } =
           document.documentElement;
         if (scrollTop + clientHeight >= scrollHeight - 20) {
-          fetchData();
+          if (ref.current === 0) fetchData();
         }
       };
   
