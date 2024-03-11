@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaSkyatlas, FaPenSquare } from "react-icons/fa";
 import './BloggerHeader.css'
 import { dark, light, store } from "../../state/store";
-import { useSelector } from "react-redux";
 
 interface HeaderProps {
   onNew: () => void;
@@ -10,7 +9,7 @@ interface HeaderProps {
 }
 
 const BloggerHeader: React.FC<HeaderProps> = ({onNew, onBlogs}) => {
-  const [selectedTheme, setSelectedTheme] = useState(useSelector((state : any) => state.theme));
+  const [selectedTheme, setSelectedTheme] = useState("light");
 
   store.subscribe(() => {
       setSelectedTheme(store.getState().value);
